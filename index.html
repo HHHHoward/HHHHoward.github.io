@@ -1,0 +1,437 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#C8E8FF;min-height:100vh;}
+.app-header{background:#2D6A4F;padding:0.55rem 1rem;display:flex;align-items:center;justify-content:space-between;}
+.app-title{font-family:'Fredoka One',cursive;font-size:1.4rem;color:#fff;text-shadow:1px 1px 0 #1a4030;}
+.coins-badge{background:#FFD93D;border-radius:20px;padding:4px 12px;font-family:'Fredoka One',cursive;font-size:0.95rem;color:#7a5500;display:flex;align-items:center;gap:5px;}
+.layout{display:grid;grid-template-columns:180px 1fr;min-height:calc(100vh - 44px);}
+.sidebar{background:#1a4030;padding:8px 6px;overflow-y:auto;max-height:calc(100vh - 44px);}
+.cat-btn{display:block;width:100%;text-align:left;padding:5px 8px;border:none;border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:0.72rem;font-weight:800;color:#a8d5bc;background:transparent;margin-bottom:2px;transition:all 0.15s;}
+.cat-btn.on{background:#2D6A4F;color:#fff;}
+.cat-btn:hover{background:#2D6A4F88;color:#fff;}
+.p-card{display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:8px;cursor:pointer;transition:all 0.15s;border:2px solid transparent;margin-bottom:3px;}
+.p-card:hover{background:#2D6A4F88;}
+.p-card.sel{background:#2D6A4F;border-color:#5DBB63;}
+.p-card .pe{font-size:1.4rem;flex-shrink:0;}
+.p-card-name{font-size:0.68rem;font-weight:800;color:#e8f5e9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.p-card-meta{font-size:0.58rem;color:#a8d5bc;}
+.sel-hint{background:#2D6A4F;border-radius:8px;padding:6px 8px;margin-top:6px;font-size:0.65rem;color:#a8d5bc;text-align:center;}
+.sel-hint strong{color:#5DBB63;display:block;font-size:0.72rem;}
+.main{display:flex;flex-direction:column;}
+
+/* Sky */
+.sky-area{position:relative;height:90px;overflow:hidden;background:#87CEEB;flex-shrink:0;}
+.sun{position:absolute;top:10px;right:45px;width:40px;height:40px;background:#FFD93D;border-radius:50%;box-shadow:0 0 0 8px rgba(255,217,61,0.18);}
+.cloud{position:absolute;background:#fff;border-radius:50px;opacity:0.92;}
+.cl1{width:76px;height:26px;top:18px;left:55px;}
+.cl1::before{content:'';position:absolute;width:42px;height:42px;background:#fff;border-radius:50%;top:-20px;left:8px;}
+.cl1::after{content:'';position:absolute;width:32px;height:32px;background:#fff;border-radius:50%;top:-13px;left:32px;}
+.cl2{width:56px;height:20px;top:38px;left:180px;opacity:0.6;}
+.cl2::before{content:'';position:absolute;width:30px;height:30px;background:#fff;border-radius:50%;top:-14px;left:6px;}
+.bird{position:absolute;font-size:13px;animation:flyby 14s linear infinite;}
+@keyframes flyby{0%{left:-40px;top:22px}100%{left:110%;top:10px}}
+
+/* Farm canvas — the main scene */
+.farm-canvas{background:#8B5E3C;border-top:5px solid #5DBB63;flex:1;padding:10px 12px 8px;position:relative;display:flex;flex-direction:column;gap:8px;}
+.grass-strip{position:absolute;top:0;left:0;right:0;height:5px;background:#5DBB63;}
+
+/* House */
+.house-wrap{display:flex;justify-content:center;margin-bottom:4px;flex-shrink:0;}
+.house{position:relative;width:160px;}
+/* Roof */
+.roof{width:0;height:0;border-left:85px solid transparent;border-right:85px solid transparent;border-bottom:55px solid #c0392b;margin:0 auto;position:relative;z-index:2;}
+.chimney{position:absolute;width:18px;height:28px;background:#8B6558;top:-28px;left:44px;border-radius:2px 2px 0 0;}
+.chimney-smoke{position:absolute;top:-10px;left:3px;width:12px;height:12px;background:#ccc;border-radius:50%;opacity:0.6;animation:puff 2s ease-in-out infinite;}
+@keyframes puff{0%,100%{transform:translateY(0) scale(1);opacity:0.6}50%{transform:translateY(-6px) scale(1.3);opacity:0.2}}
+/* House body */
+.house-body{background:#F5DEB3;border:3px solid #c9a87a;border-top:none;border-radius:0 0 6px 6px;padding:6px 8px 8px;position:relative;z-index:1;margin-top:-2px;}
+.house-row{display:flex;justify-content:space-between;align-items:flex-end;}
+/* Windows */
+.window{width:28px;height:26px;background:#87CEEB;border:3px solid #8B6558;border-radius:3px;position:relative;}
+.window::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:#8B6558;transform:translateX(-50%);}
+.window::after{content:'';position:absolute;top:50%;left:0;right:0;height:2px;background:#8B6558;transform:translateY(-50%);}
+.window-light{animation:blink 4s ease-in-out infinite;}
+@keyframes blink{0%,90%,100%{background:#87CEEB}92%{background:#FFE87C}}
+/* Door */
+.door{width:30px;height:38px;background:#8B4513;border:3px solid #5c2d0a;border-radius:3px 3px 0 0;display:flex;align-items:center;justify-content:center;}
+.door-knob{width:5px;height:5px;background:#FFD93D;border-radius:50%;}
+/* Fence */
+.fence-row{display:flex;gap:5px;justify-content:center;margin-bottom:4px;flex-shrink:0;}
+.fence-post{width:10px;height:20px;background:#D4A96A;border-radius:2px 2px 0 0;}
+.fence-rail{height:6px;background:#D4A96A;border-radius:3px;margin-top:2px;width:100%;}
+.fence-section{display:flex;flex-direction:column;align-items:stretch;}
+
+/* Farm grid label */
+.farm-label{font-family:'Fredoka One',cursive;font-size:0.82rem;color:#d4a96a;text-align:center;flex-shrink:0;}
+.farm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.plot{background:#6B3F2A;border-radius:10px;border:3px solid #4a2c1a;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.18s;position:relative;}
+.plot:hover{transform:scale(1.06);border-color:#FFD93D;}
+.plot.has-plant{border-color:#5DBB63;}
+.plot.ready-plot{border-color:#FFD93D;animation:glow 1.2s ease-in-out infinite alternate;}
+@keyframes glow{from{box-shadow:0 0 0 0 rgba(255,217,61,0)}to{box-shadow:0 0 8px 3px rgba(255,217,61,0.5)}}
+.plot-emoji{font-size:1.8rem;line-height:1;}
+.plot-name{font-size:0.48rem;font-weight:800;color:#d4a96a;text-align:center;margin-top:1px;padding:0 2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;}
+.plot-stage-bar{position:absolute;bottom:3px;left:4px;right:4px;height:3px;background:#4a2c1a;border-radius:2px;}
+.plot-stage-fill{height:100%;background:#5DBB63;border-radius:2px;transition:width 0.4s;}
+.plot.ready-plot .plot-stage-fill{background:#FFD93D;}
+.empty-label{font-size:0.5rem;color:#9c7a5a;font-weight:700;}
+.collect-pip{position:absolute;top:-5px;right:-5px;background:#FFD93D;border-radius:50%;width:15px;height:15px;display:flex;align-items:center;justify-content:center;font-size:0.5rem;font-weight:800;color:#7a5500;}
+
+.action-bar{background:#1a4030;padding:7px 10px;display:flex;gap:7px;align-items:center;flex-shrink:0;}
+.act-btn{flex:1;padding:6px 4px;border:none;border-radius:10px;cursor:pointer;font-family:'Fredoka One',cursive;font-size:0.82rem;color:#fff;transition:all 0.15s;}
+.act-btn:active{transform:translateY(2px);}
+.btn-water{background:#4D96FF;box-shadow:0 3px 0 #1a5acc;}
+.btn-harvest{background:#FFD93D;color:#7a5500;box-shadow:0 3px 0 #c9a900;}
+.btn-clear{background:#FF6B6B;box-shadow:0 3px 0 #c43f3f;}
+.status-msg{font-size:0.68rem;font-weight:800;color:#a8d5bc;text-align:center;min-width:60px;flex-shrink:0;}
+
+.rain-drop{position:absolute;width:3px;height:11px;background:#4D96FF;border-radius:2px;opacity:0;animation:fall 0.9s ease-in forwards;pointer-events:none;}
+@keyframes fall{0%{opacity:1}100%{opacity:0;top:180px}}
+.sparkle{position:absolute;font-size:0.95rem;opacity:0;animation:spark 0.6s ease-out forwards;pointer-events:none;z-index:10;}
+@keyframes spark{0%{opacity:1;transform:scale(0.5) translateY(0)}100%{opacity:0;transform:scale(1.5) translateY(-26px)}}
+
+.tabs-bottom{display:flex;background:#fff;border-top:2px solid #e0e0e0;}
+.bot-tab{flex:1;padding:6px 4px;border:none;background:transparent;cursor:pointer;font-family:'Fredoka One',cursive;font-size:0.8rem;color:#888;border-top:3px solid transparent;transition:all 0.15s;}
+.bot-tab.on{color:#2D6A4F;border-top-color:#2D6A4F;}
+.panel-area{background:#fff;padding:9px 11px;min-height:110px;}
+.section{display:none;animation:fi 0.2s ease;}
+.section.on{display:block;}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.fact-card{background:#FFFBE6;border-radius:12px;border:2px solid #FFD93D;padding:9px;display:flex;gap:9px;align-items:flex-start;}
+.fact-icon{font-size:1.9rem;flex-shrink:0;}
+.fact-title{font-family:'Fredoka One',cursive;font-size:0.9rem;color:#c9a900;margin-bottom:2px;}
+.fact-text{font-size:0.73rem;color:#555;line-height:1.5;}
+.fact-nav{display:flex;justify-content:center;gap:7px;margin-top:7px;}
+.fdot{width:8px;height:8px;border-radius:50%;background:#ddd;cursor:pointer;border:none;transition:background 0.2s;}
+.fdot.on{background:#FFD93D;}
+.harvest-list{display:flex;flex-direction:column;gap:5px;max-height:140px;overflow-y:auto;}
+.hi{display:flex;align-items:center;gap:7px;padding:5px 7px;background:#f8f8f8;border-radius:10px;border:2px solid #eee;}
+.hi.rdy{border-color:#5DBB63;background:#EAFBEC;}
+.hi-e{font-size:1.4rem;}
+.hi-info{flex:1;}
+.hi-name{font-size:0.75rem;font-weight:800;color:#333;}
+.hi-sub{font-size:0.62rem;color:#888;}
+.hi-st{font-size:0.58rem;font-weight:800;padding:2px 7px;border-radius:12px;background:#eee;color:#888;}
+.hi.rdy .hi-st{background:#5DBB63;color:#fff;}
+.cbtn{padding:3px 8px;font-family:'Fredoka One',cursive;font-size:0.72rem;border:none;border-radius:10px;background:#FFD93D;color:#7a5500;cursor:pointer;box-shadow:0 2px 0 #c9a900;}
+.cbtn:active{transform:translateY(1px);box-shadow:none;}
+</style>
+
+<div class="app-header">
+  <span class="app-title">🌱 My Little Farm</span>
+  <div class="coins-badge">🪙 <span id="coins">0</span> coins</div>
+</div>
+
+<div class="layout">
+  <div class="sidebar" id="sidebar"></div>
+
+  <div class="main">
+    <div class="sky-area" id="skyArea">
+      <div class="sun"></div>
+      <div class="cloud cl1"></div>
+      <div class="cloud cl2"></div>
+      <span class="bird">🐦</span>
+    </div>
+
+    <div class="farm-canvas" id="farmCanvas">
+      <div class="grass-strip"></div>
+
+      <!-- House -->
+      <div class="house-wrap">
+        <div class="house">
+          <div class="roof">
+            <div class="chimney"><div class="chimney-smoke"></div></div>
+          </div>
+          <div class="house-body">
+            <div class="house-row">
+              <div class="window window-light"></div>
+              <div class="door"><div class="door-knob"></div></div>
+              <div class="window"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fence -->
+      <div class="fence-section">
+        <div class="fence-row" id="fenceRow"></div>
+        <div class="fence-rail"></div>
+      </div>
+
+      <div class="farm-label">🌾 Your Farm — tap a plot to plant!</div>
+      <div class="farm-grid" id="farmGrid"></div>
+    </div>
+
+    <div class="action-bar">
+      <button class="act-btn btn-water" id="waterBtn">💧 Water All</button>
+      <button class="act-btn btn-harvest" id="harvestBtn">🌾 Harvest</button>
+      <button class="act-btn btn-clear" id="clearBtn">🗑 Remove</button>
+      <span class="status-msg" id="statusMsg"></span>
+    </div>
+
+    <div class="tabs-bottom">
+      <button class="bot-tab on" data-p="learn">📚 Fun Facts</button>
+      <button class="bot-tab" data-p="harvest">🌾 Crop Log</button>
+    </div>
+    <div class="panel-area">
+      <div class="section on" id="sec-learn"></div>
+      <div class="section" id="sec-harvest"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PLANTS=[
+  {id:'sunflower',name:'Sunflower',e:'🌻',cat:'flowers',stages:['🌱','🌿','🌼','🌻'],days:3,coins:5},
+  {id:'tulip',name:'Tulip',e:'🌷',cat:'flowers',stages:['🌱','🌿','🌸','🌷'],days:2,coins:4},
+  {id:'rose',name:'Rose',e:'🌹',cat:'flowers',stages:['🌱','🌿','🌸','🌹'],days:4,coins:9},
+  {id:'daisy',name:'Daisy',e:'🌼',cat:'flowers',stages:['🌱','🌱','🌿','🌼'],days:2,coins:3},
+  {id:'strawberry',name:'Strawberry',e:'🍓',cat:'berries',stages:['🌱','🌿','🌸','🍓'],days:4,coins:8},
+  {id:'grapes',name:'Grapes',e:'🍇',cat:'berries',stages:['🌱','🌿','🍀','🍇'],days:5,coins:11},
+  {id:'blueberry',name:'Blueberry',e:'🫐',cat:'berries',stages:['🌱','🌿','🌸','🫐'],days:4,coins:9},
+  {id:'watermelon',name:'Melon',e:'🍉',cat:'fruit',stages:['🌱','🌿','🍈','🍉'],days:5,coins:12},
+  {id:'pineapple',name:'Pineapple',e:'🍍',cat:'fruit',stages:['🌱','🌱','🌿','🍍'],days:6,coins:14},
+  {id:'mango',name:'Mango',e:'🥭',cat:'fruit',stages:['🌱','🌿','🍃','🥭'],days:6,coins:13},
+  {id:'lemon',name:'Lemon',e:'🍋',cat:'fruit',stages:['🌱','🌿','🌸','🍋'],days:5,coins:10},
+  {id:'carrot',name:'Carrot',e:'🥕',cat:'veggies',stages:['🌱','🌱','🥬','🥕'],days:3,coins:6},
+  {id:'corn',name:'Corn',e:'🌽',cat:'veggies',stages:['🌱','🌱','🌿','🌽'],days:4,coins:7},
+  {id:'tomato',name:'Tomato',e:'🍅',cat:'veggies',stages:['🌱','🌿','🌸','🍅'],days:3,coins:6},
+  {id:'pumpkin',name:'Pumpkin',e:'🎃',cat:'veggies',stages:['🌱','🌿','🍈','🎃'],days:6,coins:15},
+  {id:'pea',name:'Peas',e:'🫛',cat:'veggies',stages:['🌱','🌱','🌿','🫛'],days:2,coins:4},
+  {id:'broccoli',name:'Broccoli',e:'🥦',cat:'veggies',stages:['🌱','🌱','🥬','🥦'],days:4,coins:7},
+  {id:'pepper',name:'Pepper',e:'🫑',cat:'veggies',stages:['🌱','🌿','🌸','🫑'],days:4,coins:8},
+  {id:'mushroom',name:'Mushroom',e:'🍄',cat:'veggies',stages:['🌱','🌱','🍄','🍄'],days:2,coins:5},
+  {id:'basil',name:'Basil',e:'🌿',cat:'herbs',stages:['🌱','🌱','🌿','🌿'],days:2,coins:4},
+  {id:'bamboo',name:'Bamboo',e:'🎋',cat:'herbs',stages:['🌱','🌱','🎍','🎋'],days:3,coins:6},
+  {id:'cactus',name:'Cactus',e:'🌵',cat:'special',stages:['🌱','🌵','🌵','🌵'],days:7,coins:18},
+  {id:'cherryB',name:'Cherry tree',e:'🌸',cat:'special',stages:['🌱','🌿','🌸','🌸'],days:5,coins:12},
+  {id:'fourleaf',name:'Lucky clover',e:'🍀',cat:'special',stages:['🌱','🌱','🌿','🍀'],days:3,coins:20},
+];
+const CATS={all:'🌍 All',flowers:'🌸 Flowers',berries:'🍓 Berries',fruit:'🍉 Fruit',veggies:'🥕 Veggies',herbs:'🌿 Herbs',special:'✨ Special'};
+const FACTS=[
+  {icon:'🌻',title:'Sunflowers',text:'Sunflowers track the sun across the sky each day — called heliotropism! They can grow over 3 metres tall.'},
+  {icon:'🌱',title:'Photosynthesis',text:'Plants make food using sunlight, water and air. They\'re like tiny solar-powered food factories!'},
+  {icon:'🌧️',title:'Water & roots',text:'Roots drink water from the soil and carry it up to the leaves. Some roots grow 6 metres deep!'},
+  {icon:'🐝',title:'Helpful bugs',text:'Bees carry pollen between flowers. One bee visits up to 1,000 flowers in a single day!'},
+  {icon:'🍎',title:'Seeds in fruit',text:'Fruits protect seeds inside them. Apple seeds could grow into a whole new tree!'},
+  {icon:'🌍',title:'Plants & air',text:'Plants breathe in carbon dioxide and breathe out fresh oxygen — every tree is a giant air cleaner!'},
+  {icon:'🌵',title:'Desert plants',text:'Cactus plants store water in their thick stems and survive months without any rain!'},
+  {icon:'🍀',title:'Lucky clover',text:'Finding a 4-leaf clover is very rare — only about 1 in every 5,000 clovers has 4 leaves!'},
+  {icon:'🍄',title:'Mushrooms',text:'Mushrooms are fungi, not plants! Underground they spread a huge web called mycelium.'},
+  {icon:'🎋',title:'Bamboo',text:'Bamboo is the fastest-growing plant on Earth — some species grow 90 cm in a single day!'},
+];
+
+const NUM_PLOTS=8;
+let plots=Array(NUM_PLOTS).fill(null).map((_,i)=>({id:i,plant:null,stage:0,day:0}));
+let coins=0;
+let selPlant=null;
+let activeCat='all';
+let factIdx=0;
+let factTimer=null;
+let selPlot=null;
+
+function getP(id){return PLANTS.find(p=>p.id===id);}
+
+function buildFence(){
+  const row=document.getElementById('fenceRow');
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div');p.className='fence-post';row.appendChild(p);
+  }
+}
+
+function renderSidebar(){
+  const sb=document.getElementById('sidebar');sb.innerHTML='';
+  Object.entries(CATS).forEach(([cat,label])=>{
+    const b=document.createElement('button');
+    b.className='cat-btn'+(activeCat===cat?' on':'');
+    b.textContent=label;
+    b.onclick=()=>{activeCat=cat;renderSidebar();};
+    sb.appendChild(b);
+  });
+  const sep=document.createElement('div');sep.style.cssText='border-top:1px solid #2D6A4F;margin:6px 0';sb.appendChild(sep);
+  const filtered=activeCat==='all'?PLANTS:PLANTS.filter(p=>p.cat===activeCat);
+  filtered.forEach(p=>{
+    const card=document.createElement('div');
+    card.className='p-card'+(selPlant===p.id?' sel':'');
+    card.innerHTML=`<span class="pe">${p.e}</span><div><div class="p-card-name">${p.name}</div><div class="p-card-meta">${p.days}d · 🪙${p.coins}</div></div>`;
+    card.onclick=()=>{selPlant=p.id;selPlot=null;renderSidebar();renderFarm();showStatus('Tap a plot to plant '+p.name+'!');};
+    sb.appendChild(card);
+  });
+  if(selPlant){
+    const sp=getP(selPlant);
+    const hint=document.createElement('div');hint.className='sel-hint';
+    hint.innerHTML=`<strong>${sp.e} ${sp.name}</strong>Tap a plot to plant`;
+    sb.appendChild(hint);
+  }
+}
+
+function renderFarm(){
+  const grid=document.getElementById('farmGrid');grid.innerHTML='';
+  plots.forEach((plot,i)=>{
+    const div=document.createElement('div');
+    const p=plot.plant?getP(plot.plant):null;
+    const ready=p&&plot.stage>=p.stages.length-1;
+    div.className='plot'+(p?' has-plant':'')+(ready?' ready-plot':'');
+    if(selPlot===i)div.style.borderColor='#FFD93D';
+    if(p){
+      const pct=Math.round((plot.stage/(p.stages.length-1))*100);
+      div.innerHTML=`<span class="plot-emoji">${p.stages[plot.stage]}</span><span class="plot-name">${p.name}</span><div class="plot-stage-bar"><div class="plot-stage-fill" style="width:${pct}%"></div></div>${ready?'<div class="collect-pip">!</div>':''}`;
+    } else {
+      div.innerHTML=`<span class="plot-emoji" style="font-size:1.1rem;opacity:0.25">🟫</span><span class="empty-label">empty</span>`;
+    }
+    div.onclick=()=>onPlotClick(i);
+    grid.appendChild(div);
+  });
+}
+
+function onPlotClick(i){
+  const plot=plots[i];
+  if(selPlant&&!plot.plant){
+    plot.plant=selPlant;plot.stage=0;plot.day=0;
+    const p=getP(selPlant);
+    showStatus('Planted '+p.name+'! 🌱');
+    doSparkle(i);renderFarm();renderHarvestPanel();
+  } else if(plot.plant){
+    selPlot=i;
+    const p=getP(plot.plant);
+    const ready=plot.stage>=p.stages.length-1;
+    showStatus(ready?p.name+' is ready! 🌾':p.name+' · stage '+(plot.stage+1)+'/'+p.stages.length);
+    renderFarm();
+  } else {
+    showStatus('Pick a plant from the left first!');
+  }
+}
+
+function doSparkle(i){
+  const grid=document.getElementById('farmGrid');
+  const cells=grid.querySelectorAll('.plot');
+  if(!cells[i])return;
+  const r=cells[i].getBoundingClientRect();
+  const ar=document.getElementById('farmCanvas').getBoundingClientRect();
+  ['✨','⭐','🌟'].forEach((s,j)=>{
+    const sp=document.createElement('span');sp.className='sparkle';sp.textContent=s;
+    sp.style.left=(r.left-ar.left+r.width/2-10+(j-1)*12)+'px';
+    sp.style.top=(r.top-ar.top-8)+'px';
+    document.getElementById('farmCanvas').appendChild(sp);
+    setTimeout(()=>sp.remove(),700);
+  });
+}
+
+function doWater(){
+  let grew=0;
+  plots.forEach(plot=>{
+    if(!plot.plant)return;
+    const p=getP(plot.plant);
+    if(plot.stage<p.stages.length-1){
+      plot.day++;
+      if(plot.day>=p.days){plot.stage=Math.min(plot.stage+1,p.stages.length-1);plot.day=0;grew++;}
+    }
+  });
+  showStatus(grew>0?grew+' plant'+(grew>1?'s':'')+' grew! 🌿':'Plants watered! 💧');
+  rainEffect();renderFarm();renderHarvestPanel();
+}
+
+function doHarvestAll(){
+  let total=0,count=0;
+  plots.forEach((plot,i)=>{
+    if(!plot.plant)return;
+    const p=getP(plot.plant);
+    if(plot.stage>=p.stages.length-1){
+      total+=p.coins;count++;
+      doSparkle(i);
+      plot.plant=null;plot.stage=0;plot.day=0;
+    }
+  });
+  if(count>0){
+    coins+=total;
+    document.getElementById('coins').textContent=coins;
+    showStatus('Harvested '+count+' crop'+(count>1?'s':'')+' for 🪙'+total+'!');
+  } else {showStatus('No ready crops yet!');}
+  renderFarm();renderHarvestPanel();
+}
+
+function doClearSelected(){
+  if(selPlot!==null&&plots[selPlot].plant){
+    plots[selPlot].plant=null;plots[selPlot].stage=0;plots[selPlot].day=0;
+    showStatus('Plot cleared!');selPlot=null;
+    renderFarm();renderHarvestPanel();
+  } else {showStatus('Tap a plot first!');}
+}
+
+function rainEffect(){
+  const sky=document.getElementById('skyArea');
+  for(let i=0;i<12;i++){
+    setTimeout(()=>{
+      const d=document.createElement('div');d.className='rain-drop';
+      d.style.left=Math.random()*95+'%';d.style.top='-11px';
+      d.style.animationDelay=Math.random()*0.3+'s';
+      sky.appendChild(d);setTimeout(()=>d.remove(),1000);
+    },i*40);
+  }
+}
+
+function showStatus(msg){
+  const el=document.getElementById('statusMsg');el.textContent=msg;
+  clearTimeout(el._t);el._t=setTimeout(()=>el.textContent='',3000);
+}
+
+function renderFactPanel(){
+  clearInterval(factTimer);
+  const f=FACTS[factIdx];
+  const sec=document.getElementById('sec-learn');
+  sec.innerHTML=`<div class="fact-card"><span class="fact-icon">${f.icon}</span><div><div class="fact-title">${f.title}</div><div class="fact-text">${f.text}</div></div></div><div class="fact-nav" id="factNav"></div>`;
+  const nav=document.getElementById('factNav');
+  FACTS.forEach((_,i)=>{
+    const d=document.createElement('button');d.className='fdot'+(i===factIdx?' on':'');
+    d.onclick=()=>{factIdx=i;renderFactPanel();};nav.appendChild(d);
+  });
+  factTimer=setInterval(()=>{factIdx=(factIdx+1)%FACTS.length;renderFactPanel();},5000);
+}
+
+function renderHarvestPanel(){
+  const sec=document.getElementById('sec-harvest');
+  const active=plots.filter(p=>p.plant);
+  if(!active.length){sec.innerHTML='<p style="font-size:0.76rem;color:#aaa;text-align:center;padding:10px">Plant something to see your crops here!</p>';return;}
+  sec.innerHTML='<div class="harvest-list" id="hlist"></div>';
+  const list=document.getElementById('hlist');
+  plots.forEach((plot,i)=>{
+    if(!plot.plant)return;
+    const p=getP(plot.plant);
+    const ready=plot.stage>=p.stages.length-1;
+    const item=document.createElement('div');
+    item.className='hi'+(ready?' rdy':'');
+    item.innerHTML=`<span class="hi-e">${p.stages[plot.stage]}</span><div class="hi-info"><div class="hi-name">${p.name}</div><div class="hi-sub">Plot ${i+1} · Stage ${plot.stage+1}/${p.stages.length}</div></div><span class="hi-st">${ready?'Ready!':'Growing'}</span>${ready?`<button class="cbtn" data-i="${i}">Collect 🪙${p.coins}</button>`:''}`;
+    list.appendChild(item);
+  });
+  list.querySelectorAll('.cbtn').forEach(btn=>{
+    btn.onclick=()=>{
+      const idx=parseInt(btn.dataset.i);
+      const p=getP(plots[idx].plant);
+      coins+=p.coins;
+      document.getElementById('coins').textContent=coins;
+      doSparkle(idx);
+      plots[idx].plant=null;plots[idx].stage=0;plots[idx].day=0;
+      showStatus('Collected '+p.name+' 🪙'+p.coins+'!');
+      renderFarm();renderHarvestPanel();
+    };
+  });
+}
+
+document.querySelectorAll('.bot-tab').forEach(tab=>{
+  tab.onclick=()=>{
+    document.querySelectorAll('.bot-tab').forEach(t=>t.classList.remove('on'));
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('on'));
+    tab.classList.add('on');
+    document.getElementById('sec-'+tab.dataset.p).classList.add('on');
+    if(tab.dataset.p==='harvest')renderHarvestPanel();
+  };
+});
+
+document.getElementById('waterBtn').onclick=doWater;
+document.getElementById('harvestBtn').onclick=doHarvestAll;
+document.getElementById('clearBtn').onclick=doClearSelected;
+
+buildFence();renderSidebar();renderFarm();renderFactPanel();renderHarvestPanel();
+</script>
