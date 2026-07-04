@@ -117,8 +117,126 @@ body{font-family:'Nunito',sans-serif;background:#C8E8FF;min-height:100vh;}
 .hi.rdy .hi-st{background:#5DBB63;color:#fff;}
 .cbtn{padding:3px 8px;font-family:'Fredoka One',cursive;font-size:0.72rem;border:none;border-radius:10px;background:#FFD93D;color:#7a5500;cursor:pointer;box-shadow:0 2px 0 #c9a900;}
 .cbtn:active{transform:translateY(1px);box-shadow:none;}
+
+/* Landing page */
+#landingPage{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background-color:#fff;
+  background-image:
+    linear-gradient(45deg, #c0392b 25%, transparent 25%),
+    linear-gradient(-45deg, #c0392b 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #c0392b 75%),
+    linear-gradient(-45deg, transparent 75%, #c0392b 75%);
+  background-size:64px 64px;
+  background-position:0 0, 0 32px, 32px -32px, -32px 0px;
+  padding:20px;text-align:center;
+}
+.landing-card{
+  background:#fff;border-radius:24px;padding:32px 28px 28px;
+  box-shadow:0 10px 0 rgba(0,0,0,0.15), 0 14px 30px rgba(0,0,0,0.25);
+  max-width:380px;width:100%;
+  border:5px solid #2D6A4F;
+}
+.landing-emoji{font-size:3.2rem;margin-bottom:6px;}
+.landing-title{
+  font-family:'Fredoka One',cursive;font-size:2rem;color:#2D6A4F;
+  text-shadow:2px 2px 0 #FFD93D;line-height:1.2;margin-bottom:6px;
+}
+.landing-sub{font-size:0.85rem;color:#666;font-weight:800;margin-bottom:22px;}
+.landing-btns{display:flex;flex-direction:column;gap:12px;}
+.btn-instructions{
+  font-family:'Fredoka One',cursive;font-size:1rem;color:#7a5500;
+  background:#FFD93D;border:none;border-radius:14px;padding:12px 18px;
+  cursor:pointer;box-shadow:0 4px 0 #c9a900;transition:transform 0.1s;
+}
+.btn-instructions:active{transform:translateY(3px);box-shadow:0 1px 0 #c9a900;}
+.btn-start{
+  font-family:'Fredoka One',cursive;font-size:1.15rem;color:#fff;
+  background:#5DBB63;border:none;border-radius:14px;padding:14px 18px;
+  cursor:pointer;box-shadow:0 4px 0 #2e8c37;transition:transform 0.1s;
+}
+.btn-start:active{transform:translateY(3px);box-shadow:0 1px 0 #2e8c37;}
+
+.modal-overlay{
+  position:fixed;inset:0;z-index:1100;background:rgba(0,0,0,0.5);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.show{display:flex;}
+.modal-box{
+  background:#fff;border-radius:20px;padding:22px 20px;max-width:380px;width:100%;
+  border:4px solid #2D6A4F;max-height:80vh;overflow-y:auto;position:relative;
+}
+.modal-title{font-family:'Fredoka One',cursive;font-size:1.25rem;color:#2D6A4F;margin-bottom:12px;text-align:center;}
+.modal-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.modal-list li{font-size:0.8rem;color:#444;line-height:1.4;display:flex;gap:8px;align-items:flex-start;}
+.modal-list .mi-e{font-size:1.15rem;flex-shrink:0;}
+.modal-close{
+  display:block;margin:18px auto 0;font-family:'Fredoka One',cursive;font-size:0.85rem;
+  color:#fff;background:#FF6B6B;border:none;border-radius:12px;padding:8px 20px;
+  cursor:pointer;box-shadow:0 3px 0 #c43f3f;
+}
+.modal-close:active{transform:translateY(2px);box-shadow:none;}
+
+/* Quiz panel */
+.p-card.locked{opacity:0.45;cursor:not-allowed;position:relative;}
+.p-card.locked:hover{background:transparent;}
+.p-card-lock{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:0.85rem;}
+.quiz-card{background:#FFFBE6;border-radius:12px;border:2px solid #FFD93D;padding:10px;}
+.quiz-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.quiz-head .qe{font-size:1.7rem;}
+.quiz-plantname{font-family:'Fredoka One',cursive;font-size:0.9rem;color:#c9a900;}
+.quiz-tag{font-size:0.6rem;font-weight:800;color:#c9a900;background:#FFF3B0;border-radius:8px;padding:1px 7px;display:inline-block;margin-top:1px;}
+.quiz-question{font-size:0.78rem;color:#444;font-weight:800;line-height:1.4;margin-bottom:8px;}
+.quiz-options{display:flex;flex-direction:column;gap:6px;}
+.quiz-opt{text-align:left;padding:7px 10px;border-radius:10px;border:2px solid #FFD93D;background:#fff;font-family:'Nunito',sans-serif;font-size:0.75rem;font-weight:800;color:#555;cursor:pointer;transition:all 0.15s;}
+.quiz-opt:hover{background:#FFF3B0;}
+.quiz-opt:disabled{cursor:default;}
+.quiz-opt.correct-ans{background:#5DBB63;border-color:#2e8c37;color:#fff;}
+.quiz-opt.wrong-ans{background:#FF6B6B;border-color:#c43f3f;color:#fff;}
+.quiz-feedback{font-size:0.72rem;font-weight:800;margin-top:7px;text-align:center;min-height:16px;}
+.quiz-feedback.ok{color:#2e8c37;}
+.quiz-feedback.bad{color:#c43f3f;}
+.quiz-locked{background:#F0F0F0;border-radius:12px;border:2px dashed #bbb;padding:14px 10px;text-align:center;}
+.quiz-locked .qe{font-size:2rem;opacity:0.4;filter:grayscale(1);}
+.quiz-locked-title{font-family:'Fredoka One',cursive;font-size:0.85rem;color:#888;margin:4px 0 3px;}
+.quiz-locked-sub{font-size:0.68rem;color:#999;margin-bottom:8px;}
+.quiz-unlock-btn{font-family:'Fredoka One',cursive;font-size:0.78rem;color:#7a5500;background:#FFD93D;border:none;border-radius:10px;padding:7px 16px;cursor:pointer;box-shadow:0 3px 0 #c9a900;}
+.quiz-unlock-btn:disabled{opacity:0.5;cursor:not-allowed;box-shadow:0 3px 0 #999;background:#ddd;color:#888;}
+.quiz-unlock-btn:not(:disabled):active{transform:translateY(2px);box-shadow:none;}
+.quiz-done{background:#EAFBEC;border-radius:12px;border:2px solid #5DBB63;padding:14px 10px;text-align:center;}
+.quiz-done .qe{font-size:2rem;}
+.quiz-done-title{font-family:'Fredoka One',cursive;font-size:0.9rem;color:#2e8c37;margin-top:4px;}
 </style>
 
+<div id="landingPage">
+  <div class="landing-card">
+    <div class="landing-emoji">🌻🚜🌱</div>
+    <div class="landing-title">Explore 'N' Grow</div>
+    <div class="landing-sub">Plant, water, and harvest your very own farm!</div>
+    <div class="landing-btns">
+      <button class="btn-instructions" id="instructionsBtn">📖 How to Play</button>
+      <button class="btn-start" id="startBtn">▶ Start</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-title">📖 How to Play</div>
+    <ul class="modal-list">
+      <li><span class="mi-e">🧠</span><span>Answer the Quiz at the bottom to unlock your first plant!</span></li>
+      <li><span class="mi-e">🌱</span><span>Once unlocked, pick that plant from the sidebar and tap an empty plot to plant it.</span></li>
+      <li><span class="mi-e">💧</span><span>Tap "Water All" to help your plants grow through their stages.</span></li>
+      <li><span class="mi-e">🌾</span><span>When a plant is fully grown, its plot will glow — tap "Harvest" to collect it!</span></li>
+      <li><span class="mi-e">🪙</span><span>Harvested crops earn you coins — use them to unlock the next quiz and plant!</span></li>
+      <li><span class="mi-e">🗑</span><span>Tap a planted plot then "Remove" to clear it if you change your mind.</span></li>
+    </ul>
+    <button class="modal-close" id="modalCloseBtn">Got it!</button>
+  </div>
+</div>
+
+<div id="mainApp" style="display:none">
 <div class="app-header">
   <span class="app-title">🌱 Explore 'N' Grow</span>
   <div class="coins-badge">🪙 <span id="coins">0</span> coins</div>
@@ -172,15 +290,32 @@ body{font-family:'Nunito',sans-serif;background:#C8E8FF;min-height:100vh;}
     </div>
 
     <div class="tabs-bottom">
-      <button class="bot-tab on" data-p="learn">📚 Fun Facts</button>
+      <button class="bot-tab on" data-p="quiz">🧠 Quiz</button>
       <button class="bot-tab" data-p="harvest">🌾 Crop Log</button>
     </div>
     <div class="panel-area">
-      <div class="section on" id="sec-learn"></div>
+      <div class="section on" id="sec-quiz"></div>
       <div class="section" id="sec-harvest"></div>
     </div>
   </div>
 </div>
+</div>
+
+<script>
+document.getElementById('instructionsBtn').onclick=()=>{
+  document.getElementById('modalOverlay').classList.add('show');
+};
+document.getElementById('modalCloseBtn').onclick=()=>{
+  document.getElementById('modalOverlay').classList.remove('show');
+};
+document.getElementById('modalOverlay').onclick=(e)=>{
+  if(e.target.id==='modalOverlay')e.target.classList.remove('show');
+};
+document.getElementById('startBtn').onclick=()=>{
+  document.getElementById('landingPage').style.display='none';
+  document.getElementById('mainApp').style.display='';
+};
+</script>
 
 <script>
 const PLANTS=[
@@ -210,27 +345,138 @@ const PLANTS=[
   {id:'fourleaf',name:'Lucky clover',e:'🍀',cat:'special',stages:['🌱','🌱','🌿','🍀'],days:3,coins:20},
 ];
 const CATS={all:'🌍 All',flowers:'🌸 Flowers',berries:'🍓 Berries',fruit:'🍉 Fruit',veggies:'🥕 Veggies',herbs:'🌿 Herbs',special:'✨ Special'};
-const FACTS=[
-  {icon:'🌻',title:'Sunflowers',text:'Sunflowers track the sun across the sky each day — called heliotropism! They can grow over 3 metres tall.'},
-  {icon:'🌱',title:'Photosynthesis',text:'Plants make food using sunlight, water and air. They\'re like tiny solar-powered food factories!'},
-  {icon:'🌧️',title:'Water & roots',text:'Roots drink water from the soil and carry it up to the leaves. Some roots grow 6 metres deep!'},
-  {icon:'🐝',title:'Helpful bugs',text:'Bees carry pollen between flowers. One bee visits up to 1,000 flowers in a single day!'},
-  {icon:'🍎',title:'Seeds in fruit',text:'Fruits protect seeds inside them. Apple seeds could grow into a whole new tree!'},
-  {icon:'🌍',title:'Plants & air',text:'Plants breathe in carbon dioxide and breathe out fresh oxygen — every tree is a giant air cleaner!'},
-  {icon:'🌵',title:'Desert plants',text:'Cactus plants store water in their thick stems and survive months without any rain!'},
-  {icon:'🍀',title:'Lucky clover',text:'Finding a 4-leaf clover is very rare — only about 1 in every 5,000 clovers has 4 leaves!'},
-  {icon:'🍄',title:'Mushrooms',text:'Mushrooms are fungi, not plants! Underground they spread a huge web called mycelium.'},
-  {icon:'🎋',title:'Bamboo',text:'Bamboo is the fastest-growing plant on Earth — some species grow 90 cm in a single day!'},
-];
+const QUIZZES={
+  sunflower:[
+    {q:"Which way do sunflowers turn to follow during the day?",opts:["The moon","The sun","The wind"],a:1},
+    {q:"What color are the petals of a sunflower usually?",opts:["Yellow","Blue","Purple"],a:0},
+    {q:"What can you eat from a sunflower after it dries out?",opts:["Its bark","Its roots","Its seeds"],a:2},
+  ],
+  tulip:[
+    {q:"Tulips are especially famous flowers from which country?",opts:["Egypt","The Netherlands","Australia"],a:1},
+    {q:"What shape are tulip petals usually?",opts:["Cup-shaped","Star-shaped","Flat and round"],a:0},
+    {q:"In which season do tulips usually bloom?",opts:["Winter","Spring","Autumn"],a:1},
+  ],
+  rose:[
+    {q:"What sharp little things grow on a rose stem to protect it?",opts:["Leaves","Thorns","Petals"],a:1},
+    {q:"Roses are often given as a gift for...",opts:["Love and celebrations","Building houses","Cooking soup"],a:0},
+    {q:"Many roses are famous for having a...",opts:["Sour smell","Sweet smell","No smell at all"],a:1},
+  ],
+  daisy:[
+    {q:"What color are the petals of a classic daisy flower?",opts:["White","Blue","Purple"],a:0},
+    {q:"What shape and color is the middle of a daisy?",opts:["Square and blue","Round and yellow","Triangle and green"],a:1},
+    {q:"A 'daisy chain' is made by...",opts:["Baking daisies into bread","Linking daisy stems together","Freezing daisies in ice"],a:1},
+  ],
+  strawberry:[
+    {q:"Where do you find the tiny seeds on a strawberry?",opts:["Inside the fruit","On the outside of the fruit","Underground"],a:1},
+    {q:"What color is a ripe strawberry?",opts:["Red","Blue","Black"],a:0},
+    {q:"Strawberry plants grow close to the...",opts:["Clouds","Ocean floor","Ground"],a:2},
+  ],
+  grapes:[
+    {q:"Grapes grow in bunches on a climbing plant called a...",opts:["Tree","Vine","Shrub"],a:1},
+    {q:"What can grapes be dried into?",opts:["Raisins","Rocks","Chips"],a:0},
+    {q:"What juicy drink can grapes be squeezed into?",opts:["Grape juice","Orange soda","Hot chocolate"],a:0},
+  ],
+  blueberry:[
+    {q:"What color are blueberries when they're ripe and ready to eat?",opts:["Red","Blue-purple","Green"],a:1},
+    {q:"Blueberries grow on a small plant called a...",opts:["Bush","Vine","Tall tree"],a:0},
+    {q:"Blueberries are often added to which breakfast food?",opts:["Soup","Pancakes or muffins","Pizza"],a:1},
+  ],
+  watermelon:[
+    {q:"What is mostly inside a juicy watermelon?",opts:["Water","Sand","Air"],a:0},
+    {q:"What color is the inside flesh of a watermelon usually?",opts:["Blue","Purple","Pink or red"],a:2},
+    {q:"What do we usually spit out while eating watermelon?",opts:["The seeds","The skin only","Nothing at all"],a:0},
+  ],
+  pineapple:[
+    {q:"Where does a pineapple actually grow?",opts:["Underground like a potato","On a spiky plant close to the ground","Under water"],a:1},
+    {q:"What does the outside (skin) of a pineapple look like?",opts:["Smooth and soft","Bumpy and spiky","Fuzzy like a peach"],a:1},
+    {q:"Pineapples grow best in what kind of climate?",opts:["Warm and tropical","Freezing cold","Very snowy"],a:0},
+  ],
+  mango:[
+    {q:"What color can a ripe mango be?",opts:["Only green","Yellow, orange or red","Only purple"],a:1},
+    {q:"What is found in the middle of a mango?",opts:["A large flat pit","Lots of small seeds","No seed at all"],a:0},
+    {q:"Mangoes grow on what kind of plant?",opts:["A vine","A bush","A tree"],a:2},
+  ],
+  lemon:[
+    {q:"What taste do lemons have?",opts:["Sweet","Sour","Salty"],a:1},
+    {q:"What color is a ripe lemon?",opts:["Yellow","Purple","Black"],a:0},
+    {q:"Lemon juice is often mixed with water to make a drink called...",opts:["Lemonade","Milkshake","Hot cocoa"],a:0},
+  ],
+  carrot:[
+    {q:"What part of the carrot plant do we usually eat?",opts:["The leaves","The root","The flower"],a:1},
+    {q:"What color are most carrots?",opts:["Orange","Blue","Black"],a:0},
+    {q:"Which animal in cartoons is famous for loving carrots?",opts:["A shark","A penguin","A rabbit"],a:2},
+  ],
+  corn:[
+    {q:"What do we call the yellow seeds on a corn cob?",opts:["Kernels","Petals","Roots"],a:0},
+    {q:"What color is corn usually?",opts:["Yellow","Blue","Black"],a:0},
+    {q:"What tasty movie snack is made from popped corn?",opts:["Corn syrup","Popcorn","Corn chips"],a:1},
+  ],
+  tomato:[
+    {q:"Scientists actually call a tomato a...",opts:["Fruit","Rock","Root"],a:0},
+    {q:"What color is a ripe tomato usually?",opts:["Red","Blue","Black"],a:0},
+    {q:"Tomatoes are often turned into a sauce for...",opts:["Ice cream","Pasta or pizza","Cereal"],a:1},
+  ],
+  pumpkin:[
+    {q:"Pumpkins are often carved into faces for which holiday?",opts:["Halloween","Valentine's Day","New Year"],a:0},
+    {q:"What color is a pumpkin usually?",opts:["Orange","Purple","Blue"],a:0},
+    {q:"What warm dessert is often made from pumpkin?",opts:["Cheese sticks","Ice pops","Pumpkin pie"],a:2},
+  ],
+  pea:[
+    {q:"Where do peas grow before we shell and eat them?",opts:["In the ground like a carrot","Inside a pod","On a tall tree"],a:1},
+    {q:"What color are peas usually?",opts:["Green","Red","Black"],a:0},
+    {q:"How are peas usually arranged inside their pod?",opts:["Only one, ever","Several, in a row","Hundreds and hundreds"],a:1},
+  ],
+  broccoli:[
+    {q:"What part of the broccoli plant do we eat?",opts:["The roots","The tiny flower buds","The seeds"],a:1},
+    {q:"What color is broccoli usually?",opts:["Green","Orange","Purple"],a:0},
+    {q:"Broccoli looks a bit like a tiny...",opts:["Car","House","Tree"],a:2},
+  ],
+  pepper:[
+    {q:"What can happen when you eat a very spicy pepper?",opts:["Your mouth feels cold","Your mouth feels hot","Nothing at all"],a:1},
+    {q:"What colors can a bell pepper be?",opts:["Only black","Red, yellow or green","Only white"],a:1},
+    {q:"Which part of a chili pepper is usually the spiciest?",opts:["The very tip","The stem","The seeds and inside ribs"],a:2},
+  ],
+  mushroom:[
+    {q:"Are mushrooms actually a type of plant?",opts:["Yes, all mushrooms are plants","No, they are fungi","No, they are animals"],a:1},
+    {q:"Where do mushrooms usually like to grow?",opts:["Cool, damp, shady places","Hot, dry deserts","Deep underwater"],a:0},
+    {q:"What is the top round part of a mushroom called?",opts:["The petal","The root","The cap"],a:2},
+  ],
+  basil:[
+    {q:"Basil is used a lot in cooking mostly because of its...",opts:["Bright color","Smell and taste","Sharp thorns"],a:1},
+    {q:"What color are basil leaves usually?",opts:["Green","Blue","Orange"],a:0},
+    {q:"Basil is often used to make a green sauce called...",opts:["Pesto","Ketchup","Mustard"],a:0},
+  ],
+  bamboo:[
+    {q:"Bamboo is famous for being one of the ____ growing plants on Earth.",opts:["Slowest","Fastest","Smallest"],a:1},
+    {q:"Which large animal loves to eat bamboo?",opts:["A panda","A lion","A penguin"],a:0},
+    {q:"Bamboo is actually a very tall type of...",opts:["Grass","Rock","Coral"],a:0},
+  ],
+  cactus:[
+    {q:"How do cactus plants survive in the hot, dry desert?",opts:["They store water in their thick stems","They grow deep underground only","They don't need any water ever"],a:0},
+    {q:"What sharp things grow on a cactus to protect it?",opts:["Spines","Leaves","Petals"],a:0},
+    {q:"Cactus plants usually live in what kind of place?",opts:["The rainforest","The ocean","The desert"],a:2},
+  ],
+  cherryB:[
+    {q:"What grows on a cherry tree before the cherries appear?",opts:["Snow","Pink or white blossoms","Sharp thorns"],a:1},
+    {q:"What color are ripe cherries usually?",opts:["Red","Blue","Black"],a:0},
+    {q:"Some countries celebrate when cherry trees bloom with pretty...",opts:["Pink flowers","Green leaves only","Brown bark"],a:0},
+  ],
+  fourleaf:[
+    {q:"How many leaves does a regular, common clover usually have?",opts:["2","3","4"],a:1},
+    {q:"What color are clover leaves usually?",opts:["Green","Red","Blue"],a:0},
+    {q:"A four-leaf clover is considered a symbol of...",opts:["Bad weather","Bedtime","Good luck"],a:2},
+  ],
+};
 
 const NUM_PLOTS=8;
 let plots=Array(NUM_PLOTS).fill(null).map((_,i)=>({id:i,plant:null,stage:0,day:0}));
 let coins=0;
 let selPlant=null;
 let activeCat='all';
-let factIdx=0;
-let factTimer=null;
 let selPlot=null;
+let unlockedPlants=new Set();
+let quizProgress=0;
+let quizState='available';
 
 function getP(id){return PLANTS.find(p=>p.id===id);}
 
@@ -253,10 +499,13 @@ function renderSidebar(){
   const sep=document.createElement('div');sep.style.cssText='border-top:1px solid #2D6A4F;margin:6px 0';sb.appendChild(sep);
   const filtered=activeCat==='all'?PLANTS:PLANTS.filter(p=>p.cat===activeCat);
   filtered.forEach(p=>{
+    const locked=!unlockedPlants.has(p.id);
     const card=document.createElement('div');
-    card.className='p-card'+(selPlant===p.id?' sel':'');
-    card.innerHTML=`<span class="pe">${p.e}</span><div><div class="p-card-name">${p.name}</div><div class="p-card-meta">${p.days}d · 🪙${p.coins}</div></div>`;
-    card.onclick=()=>{selPlant=p.id;selPlot=null;renderSidebar();renderFarm();showStatus('Tap a plot to plant '+p.name+'!');};
+    card.className='p-card'+(selPlant===p.id?' sel':'')+(locked?' locked':'');
+    card.innerHTML=`<span class="pe">${p.e}</span><div><div class="p-card-name">${p.name}</div><div class="p-card-meta">${p.days}d · 🪙${p.coins}</div></div>${locked?'<span class="p-card-lock">🔒</span>':''}`;
+    card.onclick=locked
+      ? ()=>{showStatus('Answer the Quiz to unlock '+p.name+'! 🔒');}
+      : ()=>{selPlant=p.id;selPlot=null;renderSidebar();renderFarm();showStatus('Tap a plot to plant '+p.name+'!');};
     sb.appendChild(card);
   });
   if(selPlant){
@@ -350,6 +599,7 @@ function doHarvestAll(){
     showStatus('Harvested '+count+' crop'+(count>1?'s':'')+' for 🪙'+total+'!');
   } else {showStatus('No ready crops yet!');}
   renderFarm();renderHarvestPanel();
+  if(quizState==='locked')renderQuizPanel();
 }
 
 function doClearSelected(){
@@ -377,17 +627,71 @@ function showStatus(msg){
   clearTimeout(el._t);el._t=setTimeout(()=>el.textContent='',3000);
 }
 
-function renderFactPanel(){
-  clearInterval(factTimer);
-  const f=FACTS[factIdx];
-  const sec=document.getElementById('sec-learn');
-  sec.innerHTML=`<div class="fact-card"><span class="fact-icon">${f.icon}</span><div><div class="fact-title">${f.title}</div><div class="fact-text">${f.text}</div></div></div><div class="fact-nav" id="factNav"></div>`;
-  const nav=document.getElementById('factNav');
-  FACTS.forEach((_,i)=>{
-    const d=document.createElement('button');d.className='fdot'+(i===factIdx?' on':'');
-    d.onclick=()=>{factIdx=i;renderFactPanel();};nav.appendChild(d);
+function renderQuizPanel(){
+  const sec=document.getElementById('sec-quiz');
+
+  if(quizState==='done'){
+    sec.innerHTML=`<div class="quiz-done"><span class="qe">🎉</span><div class="quiz-done-title">You unlocked every plant! Great job, farmer!</div></div>`;
+    return;
+  }
+
+  const plant=PLANTS[quizProgress];
+
+  if(quizState==='locked'){
+    const cost=PLANTS[quizProgress-1].coins;
+    sec.innerHTML=`<div class="quiz-locked">
+        <span class="qe">${plant.e}</span>
+        <div class="quiz-locked-title">Next up: ${plant.name}</div>
+        <div class="quiz-locked-sub">Unlock this quiz to earn the chance to grow it!</div>
+        <button class="quiz-unlock-btn" id="unlockQuizBtn" ${coins<cost?'disabled':''}>🔓 Unlock for 🪙${cost}</button>
+      </div>`;
+    const btn=document.getElementById('unlockQuizBtn');
+    btn.onclick=()=>{
+      if(coins<cost)return;
+      coins-=cost;
+      document.getElementById('coins').textContent=coins;
+      quizState='available';
+      showStatus('Quiz unlocked! 🧠');
+      renderQuizPanel();
+    };
+    return;
+  }
+
+  // quizState === 'available'
+  const pool=QUIZZES[plant.id];
+  const quiz=pool[Math.floor(Math.random()*pool.length)];
+  sec.innerHTML=`<div class="quiz-card">
+      <div class="quiz-head"><span class="qe">${plant.e}</span><div><div class="quiz-plantname">${plant.name}</div><span class="quiz-tag">🧠 Quiz to unlock!</span></div></div>
+      <div class="quiz-question">${quiz.q}</div>
+      <div class="quiz-options" id="quizOpts"></div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+    </div>`;
+  const optsWrap=document.getElementById('quizOpts');
+  quiz.opts.forEach((opt,idx)=>{
+    const b=document.createElement('button');
+    b.className='quiz-opt';b.textContent=opt;
+    b.onclick=()=>{
+      const allBtns=optsWrap.querySelectorAll('.quiz-opt');
+      const fb=document.getElementById('quizFeedback');
+      if(idx===quiz.a){
+        allBtns.forEach(bb=>bb.disabled=true);
+        b.classList.add('correct-ans');
+        fb.className='quiz-feedback ok';
+        fb.textContent='🎉 Correct! '+plant.name+' unlocked!';
+        unlockedPlants.add(plant.id);
+        quizProgress++;
+        quizState=quizProgress<PLANTS.length?'locked':'done';
+        renderSidebar();
+        setTimeout(renderQuizPanel,1400);
+      } else {
+        b.classList.add('wrong-ans');
+        b.disabled=true;
+        fb.className='quiz-feedback bad';
+        fb.textContent='❌ Not quite — try another answer!';
+      }
+    };
+    optsWrap.appendChild(b);
   });
-  factTimer=setInterval(()=>{factIdx=(factIdx+1)%FACTS.length;renderFactPanel();},5000);
 }
 
 function renderHarvestPanel(){
@@ -415,6 +719,7 @@ function renderHarvestPanel(){
       plots[idx].plant=null;plots[idx].stage=0;plots[idx].day=0;
       showStatus('Collected '+p.name+' 🪙'+p.coins+'!');
       renderFarm();renderHarvestPanel();
+      if(quizState==='locked')renderQuizPanel();
     };
   });
 }
@@ -433,5 +738,5 @@ document.getElementById('waterBtn').onclick=doWater;
 document.getElementById('harvestBtn').onclick=doHarvestAll;
 document.getElementById('clearBtn').onclick=doClearSelected;
 
-buildFence();renderSidebar();renderFarm();renderFactPanel();renderHarvestPanel();
+buildFence();renderSidebar();renderFarm();renderQuizPanel();renderHarvestPanel();
 </script>
